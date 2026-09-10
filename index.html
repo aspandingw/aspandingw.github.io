@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>换发型的网站-AI虚拟试发与发型设计灵感平台</title>
+    <meta name="description" content="换发型的网站为爱美人士提供海量发型图片、AI虚拟试发工具、专业发型师建议与流行趋势指南，助你找到最适合自己的新造型。">
+    <meta name="keywords" content="换发型,虚拟试发,发型设计,发型图片,发型推荐,发型师,剪发灵感">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+            background: #faf7f2;
+            color: #2d2a24;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            color: #6b4f3a;
+            text-decoration: none;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* 顶部信息栏 */
+        .top-bar {
+            background: #2d2a24;
+            color: #f0e9df;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            letter-spacing: 0.3px;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .top-bar span {
+            opacity: 0.8;
+        }
+
+        /* 页眉 */
+        header.site-header {
+            background: #fffdf9;
+            border-bottom: 1px solid #e8e1d6;
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.02);
+        }
+        .header-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand-icon {
+            background: #6b4f3a;
+            color: #fffdf9;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .brand-text h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2d2a24;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        .brand-text .tagline {
+            font-size: 0.8rem;
+            color: #7a6a5a;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        nav.main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 26px;
+            flex-wrap: wrap;
+        }
+        nav.main-nav a {
+            font-weight: 500;
+            color: #3e362e;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+        nav.main-nav a:hover {
+            border-bottom-color: #b3927a;
+            color: #6b4f3a;
+        }
+        .nav-cta {
+            background: #6b4f3a;
+            color: #fff !important;
+            padding: 8px 18px !important;
+            border-radius: 30px;
+            border-bottom: none !important;
+            transition: background 0.2s;
+        }
+        .nav-cta:hover {
+            background: #4a3a2d;
+            color: #fff !important;
+        }
+
+        /* Hero 区域 - 换发型核心 */
+        .hero {
+            background: linear-gradient(120deg, #f4ede4 0%, #faf5ef 100%);
+            padding: 60px 0 50px;
+            border-bottom: 1px solid #e8e1d6;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .hero-content h2 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #1f1b16;
+            margin-bottom: 18px;
+        }
+        .hero-content h2 span {
+            color: #9c6f4f;
+            position: relative;
+            display: inline-block;
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #4d4238;
+            margin-bottom: 24px;
+            max-width: 520px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: #6b4f3a;
+            color: #fff !important;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            background: #503f30;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(107,79,58,0.25);
+        }
+        .btn-outline {
+            border: 1.5px solid #6b4f3a;
+            color: #6b4f3a !important;
+            background: transparent;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .btn-outline:hover {
+            background: rgba(107,79,58,0.05);
+        }
+        .hero-visual {
+            background: #e5d8c9;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.15);
+            transform: rotate(1deg);
+        }
+        .visual-card {
+            background: #fffdf9;
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+        }
+        .hair-mock {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        .hair-mock span {
+            display: block;
+            width: 60px;
+            height: 60px;
+            background: #e7d3c0;
+            border-radius: 30% 30% 45% 45%;
+            transform: rotate(-5deg);
+        }
+        .hair-mock span:nth-child(2) {
+            background: #d4b69a;
+            transform: rotate(3deg);
+        }
+        .hair-mock span:nth-child(3) {
+            background: #c0a283;
+            transform: rotate(-2deg);
+        }
+        .visual-card p {
+            font-weight: 500;
+            text-align: center;
+            color: #3e362e;
+        }
+
+        /* 特性区块 */
+        .features {
+            padding: 60px 0 40px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 38px;
+            color: #1f1b16;
+        }
+        .section-title span {
+            color: #9c6f4f;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: #fffdf9;
+            border: 1px solid #e8e1d6;
+            border-radius: 18px;
+            padding: 28px 22px;
+            transition: transform 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: #cdb8a5;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2d2a24;
+        }
+        .feature-card p {
+            color: #5e5144;
+            font-size: 0.92rem;
+        }
+
+        /* 发型分类 */
+        .category-section {
+            background: #f1eae1;
+            padding: 50px 0;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+        .category-item {
+            background: #fffdf9;
+            border-radius: 50px;
+            padding: 14px 18px;
+            text-align: center;
+            font-weight: 600;
+            color: #3e362e;
+            border: 1px solid #ddd2c4;
+            transition: 0.2s;
+        }
+        .category-item:hover {
+            background: #6b4f3a;
+            color: #fff;
+            border-color: #6b4f3a;
+        }
+
+        /* 热门发型卡片区 */
+        .trending {
+            padding: 60px 0;
+        }
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .trend-card {
+            background: #fffdf9;
+            border-radius: 16px;
+            border: 1px solid #e8e1d6;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+        .trend-card:hover {
+            box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+        }
+        .trend-img {
+            height: 180px;
+            background: linear-gradient(145deg, #ddc7b2, #c8ad92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 3rem;
+        }
+        .trend-info {
+            padding: 18px;
+        }
+        .trend-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+        .trend-info p {
+            color: #6a5b4d;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .trend-tag {
+            font-size: 0.75rem;
+            background: #f0e3d6;
+            padding: 3px 10px;
+            border-radius: 20px;
+            color: #5e4b3a;
+        }
+
+        /* 如何换发型步骤 */
+        .steps {
+            padding: 60px 0;
+            background: #fffdf9;
+        }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .step-item {
+            text-align: center;
+            padding: 0 10px;
+        }
+        .step-num {
+            width: 48px;
+            height: 48px;
+            background: #6b4f3a;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 0 auto 16px;
+        }
+        .step-item h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        .step-item p {
+            font-size: 0.85rem;
+            color: #6a5b4d;
+        }
+
+        /* 专业建议 / 文章区 */
+        .advice {
+            padding: 60px 0;
+            background: #faf5ef;
+        }
+        .advice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .advice-card {
+            background: #fff;
+            border-left: 4px solid #b3927a;
+            padding: 20px 22px;
+            border-radius: 0 12px 12px 0;
+        }
+        .advice-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .advice-card p {
+            color: #5e5144;
+            font-size: 0.9rem;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 60px 0;
+        }
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: #fffdf9;
+            border: 1px solid #e8e1d6;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 14px;
+        }
+        .faq-item h3 {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            color: #3e362e;
+        }
+        .faq-item p {
+            color: #5e5144;
+            font-size: 0.92rem;
+        }
+
+        /* 页脚 */
+        footer.site-footer {
+            background: #2d2a24;
+            color: #c9bcae;
+            padding: 40px 0 20px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-brand h3 {
+            color: #fff;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+        .footer-brand p {
+            font-size: 0.9rem;
+        }
+        .footer-links h4 {
+            color: #fff;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        .footer-links a {
+            color: #c9bcae;
+            font-size: 0.9rem;
+        }
+        .footer-links a:hover {
+            color: #fff;
+        }
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #3e3a34;
+            padding-top: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+            .header-wrap {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav.main-nav {
+                margin-top: 10px;
+            }
+            nav.main-nav ul {
+                justify-content: center;
+                gap: 14px;
+            }
+        }
+        @media (max-width: 600px) {
+            .top-bar .container {
+                justify-content: center;
+                text-align: center;
+            }
+            .hero {
+                padding: 40px 0;
+            }
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .btn-primary, .btn-outline {
+                width: 100%;
+                text-align: center;
+            }
+            .brand-text h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部信息栏 -->
+    <div class="top-bar">
+        <div class="container">
+            <span>✨ 已帮助12,000+用户找到新发型</span>
+            <span>📅 2025年春夏发型趋势已更新</span>
+        </div>
+    </div>
+
+    <!-- 页眉 -->
+    <header class="site-header">
+        <div class="container header-wrap">
+            <div class="brand">
+                <div class="brand-icon">✂️</div>
+                <div class="brand-text">
+                    <h1>换发型</h1>
+                    <div class="tagline">Find Your New Look</div>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#features">AI试发</a></li>
+                    <li><a href="#styles">发型图库</a></li>
+                    <li><a href="#trends">流行趋势</a></li>
+                    <li><a href="#advice">发型师建议</a></li>
+                    <li><a href="#faq">常见问题</a></li>
+                    <li><a href="#" class="nav-cta">开始换发型</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero 主视觉 -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h2>想换发型？<br>先在这里<span>“试戴”</span>一遍</h2>
+                <p>上传一张正面照，或浏览数千款发型灵感。AI 模拟真实效果，让你在走进理发店之前，就知道自己适合什么。</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn-primary">📸 上传照片试试</a>
+                    <a href="#styles" class="btn-outline">浏览发型图库</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-card">
+                    <div class="hair-mock">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <p>虚拟试发 · 侧颜对比</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心特点 -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">为什么用<span>换发型网站</span>？</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🧑‍🎤</span>
+                    <h3>AI 虚拟试发</h3>
+                    <p>无需剪发，上传照片即可切换长发、短发、卷发、染发效果，直观看到改变。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💇</span>
+                    <h3>千款真实发型库</h3>
+                    <p>按脸型、长度、风格分类，收录当下流行与经典发型，灵感永不枯竭。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📋</span>
+                    <h3>发型师专业建议</h3>
+                    <p>结合你的发质、头型与日常打理习惯，提供个性化推荐，降低踩雷概率。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💬</span>
+                    <h3>保存与分享</h3>
+                    <p>把心仪的发型存成对比图，发给你的发型师或朋友，沟通效率翻倍。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 发型分类 -->
+    <section class="category-section" id="styles">
+        <div class="container">
+            <h2 class="section-title">按风格探索发型</h2>
+            <div class="category-grid">
+                <div class="category-item">✨ 慵懒法式</div>
+                <div class="category-item">🖤 狼尾剪裁</div>
+                <div class="category-item">🌸 韩系气垫烫</div>
+                <div class="category-item">🌊 木马卷</div>
+                <div class="category-item">💼 职场干练</div>
+                <div class="category-item">🎨 挑染 / 挂耳染</div>
+                <div class="category-item">🪮 层次锁骨发</div>
+                <div class="category-item">🧢 中性超短发</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 热门发型图库 -->
+    <section class="trending" id="trends">
+        <div class="container">
+            <h2 class="section-title">本月热门发型 Top 6</h2>
+            <div class="trend-grid">
+                <div class="trend-card">
+                    <div class="trend-img">💇‍♀️</div>
+                    <div class="trend-info">
+                        <h3>层次锁骨发</h3>
+                        <p>修饰脸型，慵懒好打理，适合中长发过渡期。</p>
+                        <span class="trend-tag">脸型：圆/方</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-img">🦱</div>
+                    <div class="trend-info">
+                        <h3>法式大波浪</h3>
+                        <p>复古浪漫，增加发量感，长发女生首选。</p>
+                        <span class="trend-tag">风格：优雅</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-img">🧑‍🦱</div>
+                    <div class="trend-info">
+                        <h3>清爽短碎发</h3>
+                        <p>露耳设计，清爽减龄，适合夏季与职场。</p>
+                        <span class="trend-tag">风格：利落</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-img">🪮</div>
+                    <div class="trend-info">
+                        <h3>木马卷</h3>
+                        <p>螺旋卷度，自带蓬松感，适合细软发质。</p>
+                        <span class="trend-tag">卷度：中卷</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-img">🎨</div>
+                    <div class="trend-info">
+                        <h3>雾感灰棕</h3>
+                        <p>低调显白，搭配挑染更有层次，适合初次染发。</p>
+                        <span class="trend-tag">发色：冷调</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-img">🧑‍🎤</div>
+                    <div class="trend-info">
+                        <h3>狼尾剪裁</h3>
+                        <p>个性不羁，后颈留长，男女皆可尝试。</p>
+                        <span class="trend-tag">风格：街头</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 换发型步骤 -->
+    <section class="steps">
+        <div class="container">
+            <h2 class="section-title">3步找到你的新发型</h2>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <h3>上传正面照</h3>
+                    <p>光线充足、五官清晰的照片效果最佳。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <h3>智能匹配推荐</h3>
+                    <p>AI 根据脸型、发际线推荐适合的款式。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <h3>保存并预约</h3>
+                    <p>截图保存心仪造型，带着图片去和发型师沟通。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专业建议文章区 -->
+    <section class="advice" id="advice">
+        <div class="container">
+            <h2 class="section-title">发型师给换发型新手的建议</h2>
+            <div class="advice-grid">
+                <div class="advice-card">
+                    <h3>💡 先看脸型，再选发型</h3>
+                    <p>圆脸适合增加头顶高度的造型；方脸可用卷发柔化下颌线；长脸则适合齐刘海或微卷修饰脸型比例。</p>
+                </div>
+                <div class="advice-card">
+                    <h3>💡 发质决定卷度</h3>
+                    <p>细软发建议选择小卷或烫发根，营造蓬松感；粗硬发更适合大卷或层次剪裁，避免过度厚重。</p>
+                </div>
+                <div class="advice-card">
+                    <h3>💡 染发先看肤色</h3>
+                    <p>暖皮适合棕调、红调；冷皮更适合灰调、蓝调。不确定时，选择比原生发色浅2-3度的颜色最不容易出错。</p>
+                </div>
+                <div class="advice-card">
+                    <h3>💡 日常打理是重点</h3>
+                    <p>很多发型好看但需要每天打理。如果时间有限，建议选择吹干即成型或扎起来也好看的发型。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">关于换发型网站的常见问题</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>AI试发的效果准确吗？</h3>
+                    <p>AI模拟可以帮你判断款式与脸型的匹配度，但实际效果会受发量、发质、发色影响。建议把试发结果作为参考，并咨询专业发型师。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>上传照片安全吗？</h3>
+                    <p>我们仅使用照片进行发型模拟，不会公开或存储超过必要时间。你也可以使用不露全脸的侧影图测试，但效果会有所折扣。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>不知道适合什么发型怎么办？</h3>
+                    <p>可以浏览发型图库中的“脸型匹配”分类，或使用智能推荐功能。如果还是不确定，截图3-5款喜欢的发型，线下与发型师沟通时会更高效。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>换发型之后需要特别护理吗？</h3>
+                    <p>烫染后建议使用护色、修复类洗护产品，并减少高温工具使用频率。具体护理方案可以咨询你的发型师。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>✂️ 换发型网站</h3>
+                    <p>提供虚拟试发、发型灵感与专业指导，帮你每一次改变都更有把握。</p>
+                </div>
+                <div class="footer-links">
+                    <h4>栏目</h4>
+                    <ul>
+                        <li><a href="#">AI 试发</a></li>
+                        <li><a href="#">发型图库</a></li>
+                        <li><a href="#">流行趋势</a></li>
+                        <li><a href="#">发型师建议</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>支持</h4>
+                    <ul>
+                        <li><a href="#">帮助中心</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>关注</h4>
+                    <ul>
+                        <li><a href="#">小红书</a></li>
+                        <li><a href="#">抖音</a></li>
+                        <li><a href="#">微信公众号</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 换发型网站 · 让每一次改变都值得期待
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</body>
+  </html>
